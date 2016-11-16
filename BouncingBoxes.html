@@ -1,0 +1,60 @@
+<DOCTYPE html>
+<html>
+<head>
+
+  <style>
+   #canvas { background-color: #24d0d6;
+             border: 8px solid black;
+             border-radius: 5%}
+
+  </style>
+
+
+</head>
+<body>
+  <canvas id="canvas" width= "600" height= "600" ></canvas>
+
+</body>
+  <script>
+  	let canvas = document.getElementById("canvas");
+      let context = canvas.getContext("2d");
+      const min = 10;
+      const max = 20;
+      const NUM_POINTS = 10;
+      const points = [];
+for(let i = 0; i < NUM_POINTS; i++) {
+  const a = points.push({
+    x: Math.random() *  (canvas.width-50),
+    y: Math.random() *  (canvas.height-50),
+    width: Math.random() * 10+20,
+    height: Math.random() * (max - min) + max,
+    xDelta: 0.5, // the change that you will add to x, you can flip it when you get to the edge
+    yDelta: 0.5, // the change that you will add to y, you can flip it when you get to the edge
+    color: "red",
+  });
+}
+      let draw = function() {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          points.forEach(function(point) {
+              context.fillStyle = point.color;
+              context.fillRect(point.x, point.y, point.width, point.height);
+
+
+
+              point.x += point.xDelta;
+              if(point.x < 0 || point.x+point.width > 600){
+              point.xDelta = -point.xDelta;};
+              point.y +=point.yDelta;
+              if(point.y < 0 || point.y+point.height > 600 ) {
+                point.yDelta = -point.yDelta;
+              };
+
+          });
+      };
+      let animate = function() {
+          draw();
+          window.setTimeout(animate, 1);
+      };
+      animate();
+  </script>
+</html>
